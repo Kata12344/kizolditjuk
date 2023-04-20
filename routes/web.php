@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BejegyzesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/bejgy_tev', [BejegyzesController::class, 'bejgy_tev']);
+Route::post('/bejegyzes', [BejegyzesController::class, 'store']);
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::get('/dashboard', function () {

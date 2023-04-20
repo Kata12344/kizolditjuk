@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bejegyzes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BejegyzesController extends Controller
 {
@@ -27,8 +28,9 @@ class BejegyzesController extends Controller
         $bejegyzes = new Bejegyzes();
         $bejegyzes->tevekenyseg_id = $request->tevekenyseg_id;
         $bejegyzes->osztaly_id = $request->osztaly_id;
-        $bejegyzes->allapot = $request->allapot;
+        $bejegyzes->allapot = "jóváhagyásra vár";
         $bejegyzes->save();
+        return $bejegyzes;
     }
 
     public function update(Request $request, $id)
@@ -38,5 +40,13 @@ class BejegyzesController extends Controller
         $bejegyzes->osztaly_id = $request->osztaly_id;
         $bejegyzes->allapot = $request->allapot;
         $bejegyzes->save();
+    }
+
+    public function bejgy_tev(){
+        $bejgy = DB::select(DB::raw("
+        select * 
+        from bejegyzes be, tevekenysegs tev 
+        where be.tevekenyseg_id = tev.tevekenyseg_id "));
+        return $bejgy;
     }
 }
